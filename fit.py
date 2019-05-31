@@ -2,6 +2,8 @@ import getopt
 import os
 import sys
 
+from deepfossil.model import DeepFossilSegmenter, seg_dice
+
 def main(argv):
     print(os.getcwd())
     print(os.listdir('/usr/src'))
@@ -25,14 +27,9 @@ def main(argv):
         sys.exit()
     if os.path.isfile(InputVolume) and os.path.isdir(os.path.dirname(OutputLabel)):
         print("Building the model.")
-#        model = unet1.model(weights=True, summary=False)
-#        cnn = CNNModel(model=model, mean_val = 127, max_val = 127)
-        rows = 128
-        cols = 128
-        #
+        segmenter = DeepFossilSegmenter()
         print("Resizing images and segmenting")
-#        sg = Segmenter(cnn)
-#        sg.segment_bone_volume(InputVolume, OutputLabel, rows, cols)
+        segmenter.segment(InputVolume, OutputLabel)
     else:
         print("Make sure the input file exists and the output file directory is valid.")
         print("InputVolume: ", InputVolume, os.path.isfile(InputVolume))
